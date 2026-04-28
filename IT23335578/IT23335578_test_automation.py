@@ -13,6 +13,7 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 TESTS_DIR = ROOT_DIR / "test_automation"
 
 DEFAULT_EXCEL_CANDIDATES = [
+    str(ROOT_DIR / "IT23335578" / "IT23335578_Assignment 1 - Test cases.xlsx"),
     str(TESTS_DIR / "New_Test_Cases.xlsx"),
     str(TESTS_DIR / "IT23335578_Assignment 1 - Test cases.xlsx"),
     str(TESTS_DIR / "Assignment 1 - Test cases.xlsx"),
@@ -446,35 +447,35 @@ def run_test():
     actual_col_idx = actual_col_idx or _ensure_column(ws, header_row, header_values, actual_col_name)
     status_col_idx = status_col_idx or _ensure_column(ws, header_row, header_values, status_col_name)
 
-    rationale_col_idx = _find_column_index(header_values, args.rationale_col, DEFAULT_RATIONALE_COLUMN_CANDIDATES)
-    category_col_idx = _find_column_index(header_values, args.category_col, DEFAULT_CATEGORY_COLUMN_CANDIDATES)
+    # rationale_col_idx = _find_column_index(header_values, args.rationale_col, DEFAULT_RATIONALE_COLUMN_CANDIDATES)
+    # category_col_idx = _find_column_index(header_values, args.category_col, DEFAULT_CATEGORY_COLUMN_CANDIDATES)
 
-    rationale_map = {
-        "question": "Rationale: The overall message is a question",
-        "command": "Rationale: The overall message is a command",
-        "greeting": "Rationale: The overall message is a greeting",
-        "request": "Rationale: The overall message is a request",
-        "response": "Rationale: The overall message is a response",
-        "number": "Rationale: The input contains numerical values.",
-        "date": "Rationale: The input includes date information.",
-        "time": "Rationale: The input includes time-related formats.",
-        "person name": "Rationale: The input contains a specific person's name.",
-        "place name": "Rationale: The input includes names of specific locations.",
-        "digital": "Rationale: The input contains digital or technical terms in English.",
-        "platform": "Rationale: The input includes names of apps or digital platforms.",
-        "isolated english": "Rationale: Single English words are inserted within the Singlish text.",
-        "multi-word": "Rationale: English phrases containing multiple words are used.",
-        "abbreviation": "Rationale: The input includes common English abbreviations or acronyms.",
-        "spelling variant": "Rationale: The input uses non-standard or varied spelling patterns.",
-        "punctuation": "Rationale: The input uses various punctuation marks for emphasis or structure.",
-        "emoji": "Rationale: The input includes graphical emojis.",
-        "slang": "Rationale: The input uses informal slang or casual language.",
-        "repeated": "Rationale: Certain words are repeated for emphasis.",
-        "currency": "Rationale: The input mentions currency or monetary values.",
-        "measurement": "Rationale: The input includes units of measurement.",
-        "online identifier": "Rationale: The input contains handles or online identifiers.",
-        "clipped": "Rationale: Shortened English word forms are used.",
-    }
+    # rationale_map = {
+    #     "question": "Rationale: The overall message is a question",
+    #     "command": "Rationale: The overall message is a command",
+    #     "greeting": "Rationale: The overall message is a greeting",
+    #     "request": "Rationale: The overall message is a request",
+    #     "response": "Rationale: The overall message is a response",
+    #     "number": "Rationale: The input contains numerical values.",
+    #     "date": "Rationale: The input includes date information.",
+    #     "time": "Rationale: The input includes time-related formats.",
+    #     "person name": "Rationale: The input contains a specific person's name.",
+    #     "place name": "Rationale: The input includes names of specific locations.",
+    #     "digital": "Rationale: The input contains digital or technical terms in English.",
+    #     "platform": "Rationale: The input includes names of apps or digital platforms.",
+    #     "isolated english": "Rationale: Single English words are inserted within the Singlish text.",
+    #     "multi-word": "Rationale: English phrases containing multiple words are used.",
+    #     "abbreviation": "Rationale: The input includes common English abbreviations or acronyms.",
+    #     "spelling variant": "Rationale: The input uses non-standard or varied spelling patterns.",
+    #     "punctuation": "Rationale: The input uses various punctuation marks for emphasis or structure.",
+    #     "emoji": "Rationale: The input includes graphical emojis.",
+    #     "slang": "Rationale: The input uses informal slang or casual language.",
+    #     "repeated": "Rationale: Certain words are repeated for emphasis.",
+    #     "currency": "Rationale: The input mentions currency or monetary values.",
+    #     "measurement": "Rationale: The input includes units of measurement.",
+    #     "online identifier": "Rationale: The input contains handles or online identifiers.",
+    #     "clipped": "Rationale: Shortened English word forms are used.",
+    # }
 
     rows_total = max(0, int(ws.max_row or 0) - header_row)
     print(f"Starting Frontend-Only test with {rows_total} rows...")
@@ -573,14 +574,7 @@ def run_test():
                     status = "COLLECTED"
                 _set_cell_value(ws, row_index, status_col_idx, status)
                 
-                if rationale_col_idx and category_col_idx:
-                    cat_val = str(_merged_top_left_cell(ws, row_index, category_col_idx).value or "").lower()
-                    rationale_text = "Rationale: Input type coverage."
-                    for key, val in rationale_map.items():
-                        if key in cat_val:
-                            rationale_text = val
-                            break
-                    _set_cell_value(ws, row_index, rationale_col_idx, rationale_text)
+                # rationale update removed to prevent changing other columns
 
                 print(f"  -> {status}")
                 processed += 1
